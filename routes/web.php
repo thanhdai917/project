@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\ValidateController;
 
 /*
@@ -13,6 +15,16 @@ use App\Http\Controllers\ValidateController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('welcome/{locale}', function ($locale) {
+    App::setLocale($locale);
+    return view('wellcome');
+});
+
+Route::get('locale/{locale}', function ($locale) {
+    Session::put('locale', $locale);
+    return redirect()->back();
+})->name('locale');
 
 Route::get('/custom-rule/show', [ValidateController::class,'show'])->name('show');
 
